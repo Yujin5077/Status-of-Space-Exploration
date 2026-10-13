@@ -203,6 +203,14 @@ table.mx td button:focus-visible{outline:2px solid var(--accent)}
 header>div{min-width:0;flex:1 1 auto}
 .contact{display:inline-block;font-size:12px;color:var(--ink);margin-top:6px;padding:5px 10px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:6px;max-width:100%;overflow-wrap:anywhere}
 .contact a{color:var(--accent)}
+.hdocs{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.hdocs[hidden]{display:none}
+.docbtn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#fff;background:var(--accent);border-radius:8px;padding:8px 14px;text-decoration:none;white-space:nowrap}
+.docbtn small{font-weight:500;opacity:.85;font-size:11px;border:1px solid rgba(255,255,255,.6);border-radius:4px;padding:0 4px}
+.docbtn:hover{filter:brightness(1.08)}
+.docbtn:focus-visible,.doclink:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.doclink{font-size:12px;color:var(--mute)}
+@media (max-width:640px){.hdocs{flex-direction:row;align-items:center;gap:10px}}
 .nh{margin:8px 0 -8px;font-size:13px;font-weight:600;color:var(--mute)}
 
 </style>
@@ -215,6 +223,7 @@ header>div{min-width:0;flex:1 1 auto}
       <p class="sub" id="subline">국외의 우주탐사 연구지원 사업 과제 일부를 한곳에 모았습니다.</p>
       <div class="contact">기관 과제 추가 및 보안 관련 문의는 R&D전략센터 하유진(3365, <a href="mailto:hyu00@kasi.re.kr">hyu00@kasi.re.kr</a>)으로 연락 바랍니다.</div>
     </div>
+    <div class="hdocs" id="hdocs" hidden><a class="docbtn" id="manualBtn" href="manual.pdf" download="우주탐사개발사업현황_사용설명서.pdf" title="사용 설명서(PDF) 내려받기"><span aria-hidden="true">📘</span> 사용 설명서 <small>PDF</small></a><a class="doclink" href="manual.pdf" target="_blank" rel="noopener">새 창에서 보기</a></div>
     </header>
 
   <nav class="ags" id="ags" aria-label="기관 선택"></nav>
@@ -290,9 +299,10 @@ header>div{min-width:0;flex:1 1 auto}
   · <b>NASA ESI</b>는 연도별 선정 발표자료를 기준으로 정리했으며, 과제별 지원금액과 초록은 공개되지 않았습니다.<br>
   · <b>ESA GSTP</b>는 확정된 수상 과제가 아니라 2026–2028년 Compendia에 수록된 후보 활동과 계획 예산입니다. 연도는 Compendia 시작 연도인 2026년으로 표시했으며, 계약자는 아직 정해지지 않았습니다.<br>
   · <b>JAXA-STEPS</b>는 과제별 지원금액이 공개되지 않았습니다. 공고상 지원 규모는 FS 단계 약 500만~700만 엔, FM 단계 약 5,000만~7,000만 엔입니다.<br>
-  · <b>추가 등록 자료</b>(‘엑셀 추가’ 표시)는 CSA(STDP·LEAP), JAXA(TansaX), UKSA(NSIP Pilot·Call 1), ESA(GSTP 완료 활동), CNES(R&T·France 2030·SpaceShip FR)의 공개 수여·선정 목록에서 우주탐사 관련 과제를 선별해 정리한 자료입니다. 사업별 출처·수록 범위는 위 ‘자료 출처와 기준일’, 과제별 원문 링크는 각 과제 상세에서 확인할 수 있습니다.<br>
-  · <b>같은 사업이라도 자료 성격이 다를 수 있습니다.</b> ESA GSTP는 기본 자료(2026–2028 Compendia 후보 활동·계획 예산)와 추가 자료(2015–2017 완료 활동)가, UKSA NSIP는 기본 자료(2025년 Call 2 선정)와 추가 자료(2020–2023 Pilot·Call 1)가 함께 표시됩니다.<br>
-  · 추가 자료 중 <b>JAXA TansaX, UKSA NSIP(추가분), ESA GSTP 완료 활동, CNES 일부 과제는 지원금액이 공개되지 않아</b> ‘비공개’로 표시됩니다. 추가 자료의 ‘단계’는 사업별 공모 구분(예: TansaX 아이디어형·과제해결형, NSIP Discovery·Kick Starter)이며 TRL 정보가 없어 TRL 필터에서는 ‘정보 없음’으로 분류됩니다. ‘유형(실증/기술개발)’은 엑셀에 등록된 값을 그대로 사용합니다.<br>
+  · <b>CSA</b>(STDP·LEAP), <b>JAXA TansaX</b>, <b>CNES</b>(R&T·France 2030·SpaceShip FR) 등은 각 기관의 공개 수여·선정 목록에서 우주탐사 관련 과제를 선별해 정리했습니다.<br>
+  · <b>같은 사업이라도 시기별 자료 성격이 다를 수 있습니다.</b> ESA GSTP는 2026–2028 Compendia 후보 활동(계획 예산)과 2015–2017 완료 활동이, UKSA NSIP는 2025년 Call 2 선정 과제와 2020–2023년 Pilot·Call 1 과제가 함께 표시됩니다.<br>
+  · JAXA TansaX, UKSA NSIP(2020–2023), ESA GSTP 완료 활동, CNES 일부 과제는 지원금액이 공개되지 않아 ‘비공개’로 표시됩니다. 이들 사업의 ‘단계’는 공모 구분(예: TansaX 아이디어형·과제해결형, NSIP Discovery·Kick Starter)이며 TRL 정보가 없어 TRL 필터에서는 ‘정보 없음’으로 분류됩니다.<br>
+
 
   · <b>유형·주제·TRL은 공식 분류가 아닌 참고용 자체 분류</b>입니다. 유형은 궤도상·비행·우주환경 실증을 주목적으로 하는 과제를 ‘실증’, 그 외 부품·소재·모델·시제품 개발 중심 과제를 ‘기술개발’로 구분했습니다. 필터의 ‘분야’는 기관 간 비교를 위해 과제명·세부 분야를 바탕으로 자동 분류했으며, 한 과제가 여러 분야에 속할 수 있습니다. TRL은 ESA GSTP만 공식 목표 TRL이고, 나머지(≈ 표시)는 사업 단계로 추정했습니다(SBIR·STTR Phase I·ESI 1–3, Phase II 4–6, JAXA-STEPS FS 4–6·FM 7–9).<br>
   · 목록의 분야 태그와 ‘주요 세부 분야’ 순위는 사업별 원래 분류(<b>세부 분야</b>)로, 사업마다 기준이 다릅니다. NASA SBIR·STTR·ESI와 UKSA NSIP의 세부 분야는 과제 내용을 바탕으로 별도 분류했습니다. 기관 간 비교에는 필터의 ‘분야’를 이용하시기 바랍니다.<br>
@@ -438,7 +448,7 @@ function detail0(a){
   const head=f('기관 · 사업',`${a.ag} · ${P.name}${P.full?' ('+P.full+')':''}`)+f('과제 유형(자체 판단)',a.dv);
   if(a.src){
     const lks=(a.lk||[]).map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title||l.url)}</a>`).join('');
-    return `<tr class="d"><td colspan="6"><div class="dgrid">${head}${f('수행기관',a.c)}${f('세부 분야',(a.K||[]).join(', '))}${f('연도',a.yr)}${f('단계',a.ph)}${f('토픽·참조번호',a.tp)}${f('지원액',a.a!==''&&a.a!=null?fmt(a.a,a.cur)+(a.cur&&!SYM[a.cur]?' '+a.cur:''):'')}${f('원문 과제명',a.t!==a.tk?a.t:'')}${f('불러온 파일',a.src)}</div>
+    return `<tr class="d"><td colspan="6"><div class="dgrid">${head}${f('수행기관',a.c)}${f('세부 분야',(a.K||[]).join(', '))}${f('연도',a.yr)}${f('단계',a.ph)}${f('토픽·참조번호',a.tp)}${f('지원액',a.a!==''&&a.a!=null?fmt(a.a,a.cur)+(a.cur&&!SYM[a.cur]?' '+a.cur:''):'')}${f('원문 과제명',a.t!==a.tk?a.t:'')}</div>
     ${a.ab?`<div class="abs">${esc(a.ab)}</div>`:''}${lks?`<div class="links">${lks}</div>`:''}</td></tr>`; }
   if(a.g==='ESI'){ const url=D.esiUrls[a.yr];
     return `<tr class="d"><td colspan="6"><div class="dgrid">${head}${f('기술 분야',a.k)}${f('선정 대학',a.c)}${f('연구책임자(PI)',a.pi||'발표 자료에 없음')}${f('토픽',a.tpk?a.tpk+' ('+a.tp+')':'')}${f('선정 연도',a.yr)}</div>
@@ -476,7 +486,7 @@ function renderTable(){
   const slice=R.slice(st.page*PS,(st.page+1)*PS);
   $('#tb').innerHTML=slice.map(a=>`<tr class="r" tabindex="0" data-i="${a.i}" aria-expanded="${st.open.has(a.i)}"><td class="num">${a.yr}<div><button class="bm" aria-pressed="${BM.has(keyOf(a))}" aria-label="관심 과제 표시" title="누르면 관심 과제로 저장됩니다"><b>${BM.has(keyOf(a))?'★':'☆'}</b>관심</button></div></td>
    <td><span class="pb c-${a.ag}"><span class="alab">${a.ag}</span><span class="pg">${esc((PG[a.g]||{name:a.g}).name)}</span></span></td>
-   <td><div class="ttl">${esc(a.tk||a.t)}</div>${a.g!=='NSIP'&&a.t&&a.t!==a.tk?`<div class="en">${esc(a.t)}</div>`:''}<div class="co">${esc(a.c)}${a.s?' · '+esc(a.s):''}${a.g==='ESI'&&a.pi?' · '+esc(a.pi):''}</div><div class="kt"><span class="dv ${a.dv==='실증'?'dem':'dev'}">${a.dv}</span>${(a.K||[]).map(k=>`<span>${esc(k)}</span>`).join('')}${a.ex?'<span class="web">웹 추가 정보</span>':''}${a.src?'<span class="src">엑셀 추가</span>':''}</div></td>
+   <td><div class="ttl">${esc(a.tk||a.t)}</div>${a.g!=='NSIP'&&a.t&&a.t!==a.tk?`<div class="en">${esc(a.t)}</div>`:''}<div class="co">${esc(a.c)}${a.s?' · '+esc(a.s):''}${a.g==='ESI'&&a.pi?' · '+esc(a.pi):''}</div><div class="kt"><span class="dv ${a.dv==='실증'?'dem':'dev'}">${a.dv}</span>${(a.K||[]).map(k=>`<span>${esc(k)}</span>`).join('')}${a.ex?'<span class="web">웹 추가 정보</span>':''}</div></td>
    <td class="ph">${esc(phaseOf(a))||'<span class="dash">–</span>'}${trlCell(a)}</td>
    <td>${a.g==='ESI'||a.g==='STEPS'?`<span style="font-size:12.5px">${esc(a.tpk||'–')}</span>`:a.g==='GSTP'?`<span class="num" style="text-align:left">${esc(a.tp)}</span><div class="en">${esc(a.tpk)}</div>`:`<span class="num" style="text-align:left">${esc(a.tp)}</span>`}</td>
    <td class="num">${amtCell(a)}</td></tr>${st.open.has(a.i)?detail(a):''}`).join('')||'<tr><td colspan="6" class="empty">조건에 맞는 과제가 없습니다. 검색어나 필터를 바꿔 보세요.</td></tr>';
@@ -538,16 +548,17 @@ function extGroups(){
 }
 function srcOf(a){
   if(a.src){ const g=extGroups().find(x=>x.ag===a.ag&&x.g===a.g)||{}; const own=(a.lk||[])[0];
-    return {name:(g.name||'추가 등록 자료')+' (추가 등록)',url:(own&&own.url)||g.url||'',got:EXTRA.date||'–',range:g.range||''}; }
+    return {name:(g.name||'기관 공개 자료'),url:(own&&own.url)||g.url||'',got:EXTRA.date||'–',range:g.range||''}; }
   return SRC[a.g]||{name:'–',url:'',got:'–',range:''}; }
 function renderSources(){
-  const lab=(ag,name,extra)=>`<span class="alab c-${esc(ag)}">${esc(ag)}</span> <b>${esc(name)}</b>${extra?' <span class="addtag">추가</span>':''}`;
+  const lab=(ag,name,extra)=>`<span class="alab c-${esc(ag)}">${esc(ag)}</span> <b>${esc(name)}</b>`;
   const link=(u,n)=>u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`:esc(n);
   const base=PROGS.filter(p=>SRC[p.id]&&A.some(a=>a.g===p.id&&!a.src)).map(p=>{ const n=A.filter(a=>a.g===p.id&&!a.src).length, s=SRC[p.id];
-    return `<tr><td>${lab(p.ag,p.name)}</td><td class="num">${n.toLocaleString()}</td><td>${link(s.url,s.name)}</td><td>${esc(s.range)}</td><td class="num">${esc(s.got)}</td></tr>`; });
+    return [p.ag,p.id,0,`<tr><td>${lab(p.ag,p.name)}</td><td class="num">${n.toLocaleString()}</td><td>${link(s.url,s.name)}</td><td>${esc(s.range)}</td><td class="num">${esc(s.got)}</td></tr>`]; });
   const ext=extGroups().map(x=>{ const P=PG[x.g]||{name:x.g};
-    return `<tr><td>${lab(x.ag,P.name,1)}</td><td class="num">${x.rows.length.toLocaleString()}</td><td>${link(x.url,x.name)}${x.nlinks>1?` <span class="dash">외 ${x.nlinks-1}개 페이지</span>`:''}</td><td>${esc(x.range)}</td><td class="num">${esc(EXTRA.date||'–')}</td></tr>`; });
-  $('#srcs').innerHTML=`<thead><tr><th>사업</th><th style="text-align:right">과제</th><th>출처</th><th>수록 범위</th><th style="text-align:right">수집·정리일</th></tr></thead><tbody>${base.join('')}${ext.length?`<tr><td colspan="5" class="srcsep">추가 등록 자료 (extra.xlsx${EXTRA.date?` · ${esc(EXTRA.date)} 갱신`:''}) — 과제별 출처 링크는 각 과제 상세에서 확인할 수 있습니다.</td></tr>`+ext.join(''):''}</tbody>`;
+    return [x.ag,x.g,1,`<tr><td>${lab(x.ag,P.name,1)}</td><td class="num">${x.rows.length.toLocaleString()}</td><td>${link(x.url,x.name)}${x.nlinks>1?` <span class="dash">외 ${x.nlinks-1}개 페이지</span>`:''}</td><td>${esc(x.range)}</td><td class="num">${esc(EXTRA.date||'–')}</td></tr>`]; });
+  $('#srcs').innerHTML=`<thead><tr><th>사업</th><th style="text-align:right">과제</th><th>출처</th><th>수록 범위</th><th style="text-align:right">수집·정리일</th></tr></thead><tbody>${(()=>{ const oi=g=>{const i=AGS.findIndex(a=>a.id===g); return i<0?99:i;}, pi=g=>{const i=PROGS.findIndex(p=>p.id===g); return i<0?99:i;};
+    return [...base,...ext].sort((a,b)=>oi(a[0])-oi(b[0])||pi(a[1])-pi(b[1])||a[2]-b[2]).map(r=>r[3]).join(''); })()}</tbody>`;  /* 기관·사업 순으로 묶어 표시 */
   $('#fxnote').innerHTML=`· 원화 환산 기준: ${FX.date} <a href="${FX.url}" target="_blank" rel="noopener">${esc(FX.src)}</a> — USD ${FX.r.USD.toLocaleString()}원 · EUR ${FX.r.EUR.toLocaleString()}원 · GBP ${FX.r.GBP.toLocaleString()}원 · 100엔 ${(FX.r.JPY*100).toFixed(2)}원 · CAD ${FX.r.CAD.toLocaleString()}원`;
   /* 상단 소개·기준일 문구는 고정 문구 사용 */
 }
@@ -804,6 +815,10 @@ let trs; window.addEventListener('resize',()=>{ clearTimeout(trs); trs=setTimeou
 
 KWT=kwParse(TKW); kwChips();
 
+/* --- 사용 설명서: 저장소에 manual.pdf가 있으면 상단에 내려받기 버튼 표시 --- */
+(async()=>{ if(!/^https?:/.test(location.protocol)) return;
+  try{ const r=await fetch('manual.pdf',{method:'HEAD',cache:'no-store'}); if(r.ok&&!/text\/html/.test(r.headers.get('content-type')||'')) $('#hdocs').hidden=false; }catch(e){} })();
+
 applyHash(); fillThemes(); fillCats(); render(); renderSources();
 
 /* ===== 엑셀 불러오기 ===== */
@@ -879,7 +894,7 @@ function addRows(rows){
 }
 /* 방문자 브라우저 업로드는 사용하지 않음 — 저장소의 extra.xlsx만 반영 */
 try{ localStorage.removeItem('space-explorer-extra-v1'); }catch(e){}
-function msg(html){ const m=$('#impMsg'); m.innerHTML=html; m.hidden=!html; }
+function msg(html){ /* 이용자 화면에는 표시하지 않음 */ }
 function loadScript(u){ return new Promise((ok,no)=>{ const s=document.createElement('script'); s.src=u; s.async=true; s.onload=ok; s.onerror=no; document.head.appendChild(s); }); }
 async function needXLSX(){
   if(typeof XLSX!=='undefined') return true;
