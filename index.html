@@ -194,6 +194,16 @@ table.mx td button:focus-visible{outline:2px solid var(--accent)}
 .simbox .yr2{font-family:var(--mono);color:var(--mute);font-size:11.5px;margin:0 4px}
 .srcline{margin-top:10px;font-size:11.5px;color:var(--mute)}
 .srcs{width:100%;border-collapse:collapse;min-width:640px;font-size:12px}
+.srcpanel summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;user-select:none}
+.srcpanel summary::-webkit-details-marker{display:none}
+.srcpanel summary h2{margin:0}
+.srcpanel details[open] summary{margin-bottom:10px}
+.srcpanel summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:6px}
+.srcpanel .chev{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--mute);transition:background .15s}
+.srcpanel summary:hover .chev{background:var(--bg);color:var(--ink,inherit)}
+.srcpanel .chev::before{content:"";width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.srcpanel details[open] .chev::before{transform:translateY(2px) rotate(-135deg)}
+.srcpanel .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .srcs th{cursor:default;font-size:11.5px}
 .srcs td{padding:7px 10px;font-size:12px}
 .asof{font-size:12px;color:var(--mute);margin-top:4px}
@@ -221,7 +231,7 @@ header>div{min-width:0;flex:1 1 auto}
   <header>
     <div>
       <h1>우주탐사개발사업현황</h1>
-      <p class="sub" id="subline">국외의 우주탐사 연구지원 사업 과제 일부를 한곳에 모았습니다.</p>
+      <p class="sub" id="subline">국내외 우주탐사 연구지원 사업 과제 일부를 한곳에 모았습니다.</p>
       <div class="contact">기관 과제 추가 및 보안 관련 문의는 R&D전략센터 하유진(3365, <a href="mailto:hyu00@kasi.re.kr">hyu00@kasi.re.kr</a>)으로 연락 바랍니다.</div>
     </div>
     <div class="hdocs" id="hdocs" hidden><a class="docbtn" id="manualBtn" href="manual.pdf" download="우주탐사개발사업현황_사용설명서.pdf" title="사용 설명서(PDF) 내려받기"><i class="mico" aria-hidden="true"></i> 사용 설명서 <small>PDF</small></a><a class="doclink" href="manual.pdf" target="_blank" rel="noopener">새 창에서 보기</a></div>
@@ -289,8 +299,8 @@ header>div{min-width:0;flex:1 1 auto}
   </div>
   <div class="meta"><span></span><div class="pager" id="pager2"></div></div>
 
-  <section class="panel" aria-label="자료 출처와 기준일"><h2><span>자료 출처와 기준일</span></h2><div class="tblwrap" style="border:0"><table class="srcs" id="srcs"></table></div>
-    <p class="note" id="fxnote"></p></section>
+  <section class="panel srcpanel" aria-label="자료 출처와 기준일"><details id="srcbox"><summary><h2><span>자료 출처와 기준일</span></h2><span class="chev" aria-hidden="true"></span><span class="sr">펼치기/접기</span></summary><div class="tblwrap" style="border:0"><table class="srcs" id="srcs"></table></div>
+    <p class="note" id="fxnote"></p></details></section>
 <h2 class="nh">자료 이용 시 유의사항</h2>
   <p class="note">· <b>유형(실증/기술개발)·분야·TRL(≈ 표시)은 공식 분류가 아닌 참고용 자체 분류</b>입니다.<br>
   · 금액은 사업별 원래 통화로 표시하며, 원화 환산액은 기준일 환율로 계산한 참고값입니다. ESI·JAXA·NSIP 추가분 등 일부 과제는 금액이 공개되지 않았습니다.<br>
@@ -369,7 +379,8 @@ function base(){ return filt({ag:1}); }
 function ags(B){
   const cnt={}; B.forEach(a=>{cnt[a.ag]=(cnt[a.ag]||0)+1;}); const n=id=>id?(cnt[id]||0):B.length;
   /* '전체 기관'은 맨 앞 고정, 나머지는 과제 건수 많은 순 */
-  const order=AGS.slice().sort((p,q)=>(!p.id?-1:!q.id?1:n(q.id)-n(p.id)||AGS.indexOf(p)-AGS.indexOf(q)));
+  const pin=g=>!g.id?0:g.id==='KR'?1:2;  /* '전체 기관' → KR 고정, 나머지는 과제 건수 많은 순 */
+  const order=AGS.slice().sort((p,q)=>pin(p)-pin(q)||n(q.id)-n(p.id)||AGS.indexOf(p)-AGS.indexOf(q));
   $('#ags').innerHTML=order.map(g=>`<button class="ag c-${g.id||'ALL'}" data-ag="${g.id}" aria-pressed="${st.ag===g.id}" title="${esc(g.full)}"><span class="lb">${g.name}</span>${g.full?`<span>${g.full}</span>`:''}<span class="n">${n(g.id).toLocaleString()}</span></button>`).join('');
   $('#ags').querySelectorAll('.ag').forEach(b=>b.onclick=()=>{st.ag=b.dataset.ag; st.g=''; st.page=0; fillCats(); render();});
 }
@@ -545,11 +556,17 @@ const EXTSRC={
   'JAXA|SSF':{name:'JAXA 우주전략기금 선정 사업',note:'달 탐사·자원·인프라 관련 선정 사업 · 지원액 비공개'},
   'EU|Horizon':{name:'EU CORDIS 과제 정보',note:'Horizon 2020·Horizon Europe·ERC·MSCA 탐사 관련 과제 · EU 분담금'},
   'ASA|Moon to Mars':{name:'호주 정부 보조금 선정 목록 (business.gov.au)',note:'Demonstrator Feasibility(2021)·Trailblazer 1단계(2023)'},
+  'KR|우주항공청 탐사사업':{name:'우주항공청 사업 발표·예산안 보도',note:'달 착륙선·달 궤도 통신위성·시스루나 탐사선 등 · 예산안은 정부안 기준'},
+  'KR|다누리':{name:'다누리(KPLO) 사업·탑재체 보도자료',note:'2016–2022 개발 · 2022년 발사 · 탑재체 5종(국내)'},
+  'KR|국제협력 탑재체':{name:'국제 탐사임무 참여 탑재체 발표',note:'NASA CLPS·아르테미스 2호·SPHEREx'},
+  'KR|연구기관 과제':{name:'국내 연구기관·기업 발표·보도',note:'건설연·원자력연·무인탐사연구소 사례'},
   'NASA|TechPort':{url:'https://techport.nasa.gov/',name:'NASA TechPort 과제 DB (진행 중 과제 검색 내보내기)',note:'달·화성·태양계 탐사 목표 Active 과제 · 시작 연도 기준 · 지원액 미공개'},
   'NASA|Tipping Point':{name:'NASA Tipping Point 선정 발표',note:'2019·2020·2023년 선정 · 발표 당시 예상 계약액'},
   'NASA|행성탑재체':{name:'NASA 행성과학 탑재체 공모 선정(PESTO)',note:'PICASSO·MatISSE·DALI · 연도는 공모 연도'},
   'NASA|Artemis 탑재체':{name:'NASA 아르테미스·PRISM 탑재체 선정 발표',note:'Artemis III·IV 우주인 설치형, PRISM(CLPS)'},
   '연구소|연구소 사례':{name:'각 연구소·기관 공개 자료',note:'DLR·MPS·Open University·APL·IRAP·ESRIC 사례'}};
+['우주핵심기술개발','달탐사 사업','출연연 기관고유사업','기초연구 지원','스페이스챌린지','국제협력·인력교류','우주 인재양성','기타 정부 R&D'].forEach(g=>{
+  EXTSRC['KR|'+g]={url:'https://www.ntis.go.kr/',name:'NTIS 국가R&D 과제 정보 (검색 내보내기)',note:"'심우주'·'달 탐사'·'화성 탐사' 검색 중 탐사 관련 과제 · 시작 연도 기준 · 지원액은 정부투자연구비 합계"}; });
 function extGroups(){
   const m=new Map(); A.filter(a=>a.src).forEach(a=>{ const k=a.ag+'|'+a.g; if(!m.has(k)) m.set(k,{ag:a.ag,g:a.g,rows:[]}); m.get(k).rows.push(a); });
   return [...m.values()].map(x=>{ const ys=x.rows.map(a=>a.yr).filter(Boolean), lc={}; x.rows.forEach(a=>(a.lk||[]).forEach(l=>{ lc[l.url]=(lc[l.url]||0)+1; }));
